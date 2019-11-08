@@ -1,42 +1,24 @@
-import java.util.ArrayList;
-import java.util.Collections;
-
-class test{
-    int val;
-    test next;
-    test(int x) { val = x; }
-    public test mergeTwoLists(test l1, test l2) {
-        ArrayList<Integer> list=new ArrayList<Integer>();
-        while(l1!=null){
-            list.add(l1.val);
-            l1=l1.next;
-        }
-        while(l2!=null){
-            list.add(l2.val);
-            l2=l2.next;
-        }
-        if(list.isEmpty()){
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1==null)
+            return l2;
+        if(l2==null)
+            return l1;
+        if(l1.val<l2.val){
+            l1.next = mergeTwoLists(l1.next, l2);
             return l1;
         }
-        Collections.sort(list);
-        test l3 = new test(list.get(0));
-        test temp = l3;
-        for(int i=1;i<list.size();i++){
-            temp.next=new test(list.get(i));
-            temp=temp.next;
+        else{
+            l2.next = mergeTwoLists(l1,l2.next);
+            return l2;
         }
-        while(l3!=null){
-            System.out.println(l3.val);
-            l3=l3.next;
-        }
-        return l3;
-    }
-    public static void main(String[] args){
-        test t1=new test(1);
-        test t2=new test(2);
-        test t3=new test(3);
-        t1.next=t2;
-        t2.next=t3;
-        t1.mergeTwoLists(t1,t2);
     }
 }
