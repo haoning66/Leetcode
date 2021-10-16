@@ -1,20 +1,41 @@
-import java.util.*;
-
 class Solution {
-    //it will reach the leaf of the left and right subtree, flatten them and put the flattened left subtree to the right of the root
-    //and reach the leaf of the current right subtree and put the original flattened right subtree on its right, brilliant!
+    // iteration way, the linked list gets built top to bottom, the right node get pushed first
+    // because then the left node stays on top of the stack and then it gets poped first
     public void flatten(TreeNode root) {
         if (root == null)
             return;
-        if (root.left != null)
-            flatten(root.left);
-        if (root.right != null)
-            flatten(root.right);
-        TreeNode temp = root.right;
-        root.right = root.left;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.pop();
+            
+            if (cur.right != null)
+                stack.push(cur.right);
+            
+            if (cur.left != null) 
+                stack.push(cur.left);
+            
+            // for the last node, the stack will be empty
+            if (!stack.isEmpty())
+                cur.right = stack.peek();
+            
+            cur.left = null;
+        }
+        return;
+    }
+
+    // recursive, the function stack keeps track of the visit route, the list gets built bottom up
+    TreeNode prev = null;
+    public void flatten(TreeNode root) {
+        if (root == null)
+            return;
+        
+        flatten(root.right);
+        flatten(root.left);
+        
+        root.right = prev;
         root.left = null;
-        while (root.right != null)
-            root = root.right;
-        root.right = temp;
+        prev = root;
     }
 }
