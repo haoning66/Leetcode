@@ -1,32 +1,51 @@
-import java.util.*;
-
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
-    //slow fast pointer solution, reverse the first half of the list, compare with the second half
     public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null)
-            return true;
-        ListNode fast = head;
+        if (head == null)
+            return false;
+        
         ListNode slow = head;
-        ListNode slow_pre = null;
+        ListNode fast = head;
+        
         while (fast != null && fast.next != null) {
+            slow = slow.next;
             fast = fast.next.next;
-            ListNode slow_next = slow.next;
-            slow.next = slow_pre;
-            slow_pre = slow;
-            slow = slow_next;
         }
-
-        if (fast != null)        //if fast != null, means the length of the linkedlist is odd, move slow to its next
+        
+        // no need to worry about the next pointer between the old and the new reversed list, because the while loop can never get there, it will stop because it reaches the end of the reversed list.
+        slow = reverse(slow);
+        fast = head;
+        
+        while(slow != null) {
+            if (fast.val != slow.val)
+                return false;
             slow = slow.next;
-
-        while (slow_pre != null && slow != null && slow_pre.val == slow.val) {
-            slow_pre = slow_pre.next;
-            slow = slow.next;
+            fast = fast.next;
         }
-        return slow == null && slow_pre == null;
+        
+        return true;
     }
-
-    public static void main(String[] args) {
-        Solution s = new Solution();
+    
+    public ListNode reverse(ListNode cur) {
+        ListNode prev = null;
+        ListNode next = null;
+        
+        while (cur != null) {
+            next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        
+        return prev;
     }
 }
