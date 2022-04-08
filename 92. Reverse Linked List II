@@ -40,7 +40,8 @@ class Solution {
         if (connect != null) {       
             connect.next = prev;  //not from the head, connect the connection point to the head of the reversed portion
         } else {
-            head =prev;         // reverse from the head, then the connection point is prev's inital value - null
+            head = prev;         // reverse from the head, then the connection point is prev's inital value - null, and the new head will be the head of the
+                                // reversed list, which is prev at this point
         
         tail.next = cur;    // connect the tail to the other part of the list
         
