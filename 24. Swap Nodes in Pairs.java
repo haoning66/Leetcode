@@ -2,6 +2,30 @@ import javafx.util.Pair;
 
 import java.util.*;
 
+class Solution {
+    public ListNode swapPairs(ListNode head) {    // This is the best one, and I came up with it!!
+        if (head == null || head.next == null)
+            return head;
+        
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode cur = head;
+        ListNode next = null;
+        
+        while (cur != null && cur.next != null) {
+            next = cur.next;
+            prev.next = next;
+            cur.next = next.next;
+            next.next = cur;
+            prev = cur;
+            cur = cur.next; 
+        }
+        
+        return dummy.next;
+    }
+}
+
 
 class Solution {
     public ListNode swapPairs(ListNode head) {
