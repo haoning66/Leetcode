@@ -1,4 +1,4 @@
-/**
+/**                  THE BEST SOLUTION
  * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
@@ -23,15 +23,16 @@ class Solution {
         Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
         
-        while(!stack.empty()) {     // LRM is hard, we do a reversed MRL
+        while(!stack.isEmpty()) {
             root = stack.pop();
-            list.add(0, root.val);          //M
+            list.add(0, root.val);
             
-            if(root.left != null)           // L, but it is a stack L first in, L last out
+            if(root.left != null)
                 stack.push(root.left);
             
-            if(root.right != null)          // R, R gets out before L
-                stack.push(root.right);       
+            if(root.right != null) {
+                stack.push(root.right);
+            }
         }
         
         return list;
